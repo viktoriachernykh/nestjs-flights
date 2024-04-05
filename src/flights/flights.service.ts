@@ -40,14 +40,10 @@ export class FlightsService {
   ): Promise<AxiosResponse<FlightOffer[]>[]> {
     const httpRequestArray = urls.map(async (url) => {
       try {
-        return await firstValueFrom(
-          from(
-            axiosInstance.request({
-              url,
-              method: 'GET',
-            } as AxiosRequestConfig),
-          ),
-        );
+        return await axiosInstance.request({
+          url,
+          method: 'GET',
+        } as AxiosRequestConfig);
       } catch (error) {
         this.logger.error(`Failed to fetch flights: ${error}`);
         return await Promise.reject(error);
@@ -75,15 +71,12 @@ export class FlightsService {
   }
 
   removeFlightsDuplicates(flights: FlightOffer[]): FlightOffer[] {
-    const seenIds = new Set<string>();
-    const uniqueFlights: FlightOffer[] = [];
+    const uniqueFlights: { [id: string]: FlightOffer } = {};
 
-    for (const flight of flights) {
-      if (!seenIds.has(flight.id)) {
-        seenIds.add(flight.id);
-        uniqueFlights.push(flight);
-      }
+    for (let flight of flights) {
+      uniqueFlights[flight.id] = flight;
     }
-    return uniqueFlights;
+
+    return Object.values(uniqueFlights);
   }
 }

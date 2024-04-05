@@ -1,8 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpService } from '@nestjs/axios';
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import axiosRetry from 'axios-retry';
-import { firstValueFrom, from, of, throwError } from 'rxjs';
 
 import { FlightsService } from './flights.service';
 import { FlightOffer } from './flights.model';
@@ -25,7 +24,7 @@ describe('FlightsService', () => {
         {
           provide: HttpService,
           useValue: {
-            get: jest.fn(() => of({} as AxiosResponse<FlightOffer[]>)),
+            get: jest.fn(),
           },
         },
       ],
