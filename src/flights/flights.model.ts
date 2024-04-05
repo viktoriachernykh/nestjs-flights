@@ -9,6 +9,6 @@ export type Flight = {
 
 export type FlightOffer = {
   id?: string;
-  slices: [Flight, Flight];
+  slices: Flight[];
   price: number;
 };

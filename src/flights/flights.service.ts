@@ -53,8 +53,7 @@ export class FlightsService {
         return await Promise.reject(error);
       }
     });
-    const flights = await Promise.all(httpRequestArray);
-    return flights;
+    return await Promise.all(httpRequestArray);
   }
 
   mergeFlights(
