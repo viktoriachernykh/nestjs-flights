@@ -6,10 +6,10 @@ import axiosRetry from 'axios-retry';
 import { FlightsService } from './flights.service';
 import { FlightOffer } from './flights.model';
 
-import * as flightsResponse from '../../test/data/flights-response.json';
-import * as flightsMerged from '../../test/data/flights-merged.json';
-import * as flightsWithIds from '../../test/data/flights-with-ids.json';
-import * as flightsUnique from '../../test/data/flights-unique.json';
+import * as flightsResponse from '../../fixtures/flights-response.json';
+import * as flightsMerged from '../../fixtures/flights-merged.json';
+import * as flightsWithIds from '../../fixtures/flights-with-ids.json';
+import * as flightsUnique from '../../fixtures/flights-unique.json';
 
 jest.mock('axios-retry');
 

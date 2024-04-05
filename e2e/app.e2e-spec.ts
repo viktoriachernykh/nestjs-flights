@@ -15,10 +15,19 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/ (GET) should return flights array', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/flights')
       .expect(200)
-      .expect('Hello World!');
+      .expect(({ body }) => {
+        expect(body).toBeDefined();
+        expect(body).toHaveLength(8);
+        expect(body[0]).toHaveProperty(
+          'id',
+          '144-2019-08-08T04:30:00.000Z-8542-2019-08-10T05:35:00.000Z',
+        );
+        expect(body[0]).toHaveProperty('price', 129);
+        expect(body[0].slices).toHaveLength(2);
+      });
   });
 });

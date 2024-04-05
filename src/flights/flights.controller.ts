@@ -2,6 +2,12 @@ import { Controller, Get, Logger, UseInterceptors } from '@nestjs/common';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { FlightsService } from './flights.service';
 import { FlightOffer } from './flights.model';
+import {
+  ENDPOINTS,
+  RETRY_TIMEOUT,
+  MAX_RETRIES_TIMES,
+  CACHE_TTL,
+} from '../../constants/dev';
 
 @Controller()
 export class FlightsController {
@@ -11,17 +17,9 @@ export class FlightsController {
 
   @Get('flights')
   @UseInterceptors(CacheInterceptor)
-  @CacheTTL(3600000) // cache response for 1 hour
+  @CacheTTL(CACHE_TTL)
   async getFlights(): Promise<FlightOffer[]> {
-    const endpoints = [
-      'https://coding-challenge.powerus.de/flight/source1',
-      'https://coding-challenge.powerus.de/flight/source2',
-    ];
-
     this.logger.log('GET /flights has been called');
-
-    const RETRY_TIMEOUT = 200; // 200ms timeout
-    const MAX_RETRIES_TIMES = 5; // number of retry attempts
 
     try {
       // setup axios instance with retries and custom timeout
@@ -33,7 +31,7 @@ export class FlightsController {
       // fetch flights
       const flightsResponse = await this.flightsService.fetchFlights(
         axiosInstance,
-        endpoints,
+        ENDPOINTS,
       );
 
       // merge flight offers
