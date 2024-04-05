@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosRetry from 'axios-retry';
-import { firstValueFrom, from } from 'rxjs';
 import { FlightOffer } from './flights.model';
 
 @Injectable()
@@ -76,7 +75,6 @@ export class FlightsService {
     for (let flight of flights) {
       uniqueFlights[flight.id] = flight;
     }
-
     return Object.values(uniqueFlights);
   }
 }
