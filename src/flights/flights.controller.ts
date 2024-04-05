@@ -11,7 +11,7 @@ export class FlightsController {
 
   @Get('flights')
   @UseInterceptors(CacheInterceptor)
-  @CacheTTL(5000) // cache for 5 seconds
+  @CacheTTL(3600000) // cache response for 1 hour
   async getFlights(): Promise<FlightOffer[]> {
     const endpoints = [
       'https://coding-challenge.powerus.de/flight/source1',
